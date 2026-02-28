@@ -46,6 +46,16 @@ export default function Home() {
           className="w-full border rounded-lg p-4"
         />
       </div>
+
+      {response.length > 0 && (
+        <div>
+          <h4 className="mt-4 mx-2">Response: </h4>
+          <div className="border w-full max-w-xl p-4 m-2 rounded">
+            {response}
+          </div>
+        </div>
+      )}
+
       <div className="m-4">
         {!loading ? (
           <button onClick={handleChat}>Send</button>
