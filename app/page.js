@@ -33,6 +33,46 @@ export default function Home() {
     setLoading(false);
   };
 
+  const handleStreamChat = async () => {
+    setStreaming(true);
+    setStreamResponse("");
+
+    try {
+      const response = await fetch("/api/chat-stream", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message }),
+      });
+
+      const reader = response.body.getReader();
+
+      // since we encode text in api backend we need to decode it in frontend
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+
+        const delta = decoder.decode(value);
+        const lines = delta.split("\n");
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const data = json.parse(line.slice(6));
+            setStreamResponse((prev) => prev + data.content);
+          }
+        }
+      }
+    } catch (error) {
+      setStreamResponse(`Error: ${error.message}`);
+    }
+    setStreaming(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h2 className="text-2xl font-semibold mb-4">Hello Ji</h2>
