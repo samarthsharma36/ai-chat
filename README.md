@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a ai chat project to learn the basics of streaming and batch response with LLMs. Streaming is an important concept often overlooked but helps with user's perceived performance of the AI application.
 
 ## Getting Started
 
