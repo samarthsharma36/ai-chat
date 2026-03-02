@@ -62,8 +62,9 @@ export default function Home() {
 
         for (const line of lines) {
           if (line.startsWith("data: ")) {
-            const data = json.parse(line.slice(6));
-            setStreamResponse((prev) => prev + data.content);
+            console.log(line);
+            const data = JSON.parse(line.slice(6));
+            setStreamResponse((prev) => prev + data);
           }
         }
       }
@@ -96,12 +97,31 @@ export default function Home() {
         </div>
       )}
 
-      <div className="m-4">
-        {!loading ? (
-          <button onClick={handleChat}>Send</button>
-        ) : (
-          <h4>Loading</h4>
-        )}
+      {streamResponse.length > 0 && (
+        <div>
+          <h4 className="mt-4 mx-2">Stream Response: </h4>
+          <div className="border w-full max-w-xl p-4 m-2 rounded">
+            {streamResponse}
+          </div>
+        </div>
+      )}
+
+      <div className="m-4 flex w-full max-w-xl justify-between items-center">
+        <div>
+          {!loading ? (
+            <button onClick={handleChat}>Send</button>
+          ) : (
+            <h4>Loading</h4>
+          )}
+        </div>
+
+        <div>
+          {!streaming ? (
+            <button onClick={handleStreamChat}>Stream Send</button>
+          ) : (
+            <h4>Streaming</h4>
+          )}
+        </div>
       </div>
     </div>
   );
