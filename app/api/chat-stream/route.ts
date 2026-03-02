@@ -20,7 +20,7 @@ export async function POST(request) {
           const delta = chunk.choices[0]?.delta?.content || "";
           if (delta) {
             controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify(delta)}`),
+              encoder.encode(`data: ${JSON.stringify(delta)}\n\n`),
             );
           }
         }
